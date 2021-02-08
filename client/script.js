@@ -153,7 +153,7 @@ function exchangeRate() {
 function fetchTodos() {
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/todos",
+    url: base_url+"todos",
     headers: {
       token: localStorage.getItem("access_token")
     }
@@ -197,7 +197,7 @@ $("#form-add-todo").submit((e) => {
   console.log(title, description, due_date);
   $.ajax({
     method: "POST",
-    url: "http://localhost:3000/todos",
+    url: base_url+"todos",
     headers: {
       token: localStorage.getItem("access_token")
     },
@@ -247,7 +247,7 @@ function updateCard(id) {
 
 function deleteCard(id) {
   $.ajax({
-    url: `http://localhost:3000/todos/${id}`,
+    url: `${base_url}todos/${id}`,
     method: "DELETE",
     headers: {
       token: localStorage.getItem("access_token")
