@@ -11,16 +11,20 @@ function auth() {
     $("#register").hide()
     $("#login").hide()
     $("#form-add").show()
-    $("#nav-logout").show()
+    $("#div-logout").show()
     $("#exchangeapi").show()
+    $("#todo-list").show()
+    $("#login-register").hide()
     exchangeRate()
     fetchTodos()
   } else {
     $("#register").show()
     $("#login").show()
     $("#form-add").hide()
-    $("#nav-logout").hide()
+    $("#div-logout").hide()
     $("#exchangeapi").hide()
+    $("#todo-list").hide()
+    $("#login-register").show()
   }
 }
 
@@ -139,8 +143,8 @@ function exchangeRate() {
     .done(response => {
       $("#exchangeapi").remove()
       $("#div-logout").prepend(`
-      <div id="exchangeapi">
-        <p>1 Dollar Amerika Serikat sama dengan ${response} Rupiah Indonesia</p>
+      <div id="exchangeapi" class="col ms-3">
+        <p class="m-0">1 Dollar Amerika Serikat sama dengan ${response} Rupiah Indonesia</p>
       </div>
       `)
     })
@@ -162,21 +166,46 @@ function fetchTodos() {
       // console.log(todos);
       $('.card').remove()
       todos.forEach(e => {
-        $(".container").append(`
-          <div class="card" id="todo-${e.id}">
-            <label>Title</label>
-            <input class="card-title" id="todo-title-${e.id}" value="${e.title}"></input>
-            <label>Description</label>
-            <input class="card-text" id="todo-description-${e.id}" value="${e.description}"></input>
-            <label>Due Date</label>
-            <input type="date" id="todo-due_date-${e.id}">${e.due_date}</input>
-            <select class="form-select" id="todo-status-${e.id}">
-              <option selected disabled>${e.status}</option>
-              <option value="true">true</option>
-              <option value="false">false</option>
-            </select>
-            <button class="btn btn-secondary" onclick="updateCard(${e.id})">Update</button>
-            <button class="btn btn-danger" onclick="deleteCard(${e.id})">Delete</button>
+        let selected = ''
+        if (!e.status) selected = 'selected'
+        else selected = ''
+        $("#todo-list").append(`
+          <div class="card shadow rounded p-4 mb-2" id="todo-${e.id}">
+            <div class="row mb-2">
+              <label for="todo-title-${e.id}" class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-10">
+                <input class="card-title form-control-plaintext" id="todo-title-${e.id}" value="${e.title}"></input>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label for="todo-description-${e.id}" class="col-sm-2 col-form-label">Description</label>
+              <div class="col-sm-10">
+                <input class="card-text form-control-plaintext" id="todo-description-${e.id}" value="${e.description}"></input>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-form-label col-sm-2">Due Date</label>
+              <div class="col-sm-10 d-flex align-items-center">
+                <input type="date" id="todo-due_date-${e.id}" value="${new Date(e.due_date).toISOString().substr(0, 10)}"></input>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-form-label col-sm-2">Status</label>
+              <div class="col-sm-2">
+                <select class="form-select" id="todo-status-${e.id}">
+                  <option value="true" ${selected}>Done</option>
+                  <option value="false" ${selected}>Todo</option>
+                </select>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-end">
+              <div class="mx-2">
+                <button class="btn btn-secondary" onclick="updateCard(${e.id})">Update</button>
+              </div>
+              <div class="">
+                <button class="btn btn-danger" onclick="deleteCard(${e.id})">Delete</button>
+              </div>
+            </div>
           </div>
         `)
       })
@@ -215,6 +244,9 @@ $("#form-add-todo").submit((e) => {
     })
     .always(() => {
       console.log('always add todo');
+      $("#new-todo-title").val("")
+      $("#new-todo-description").val("")
+      $("#new-todo-due-date").val("")
     })
 })
 
