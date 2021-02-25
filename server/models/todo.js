@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+let date = new Date()
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
-          args: (new Date()).toDateString(),
+          args: new Date(date.setDate(date.getDate() - 1)).toDateString(),
           msg: "due_date cannot be yesterday"
         }
       }
