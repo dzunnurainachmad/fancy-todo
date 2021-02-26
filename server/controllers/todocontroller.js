@@ -21,18 +21,7 @@ class TodoController {
     Todo.findAll({where:{UserId:id}})
       .then(todos => {
         // console.log(todos);
-        const newTodos = todos.map(e => {
-          return {
-            id: e.id,
-            title: e.title,
-            description: e.description,
-            status: e.status,
-            due_date: e.due_date.toDateString(),
-            UserId: e.UserId
-          }
-        });
-        // console.log(newTodos);
-        res.status(200).json(newTodos)
+        res.status(200).json(todos)
       })
       .catch(err => {
         next(err)
@@ -56,7 +45,7 @@ class TodoController {
 
   static putTodo(req, res, next) {
     const { title, description, status, due_date } = req.body
-    Todo.update({ title, description, status, due_date },
+    Todo.update({ title, description, status, due_date: due_date.toLocaleString() },
       {
         where: {id: req.params.id},
         returning: true

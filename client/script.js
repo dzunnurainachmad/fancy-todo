@@ -1,4 +1,5 @@
 const base_url = "https://fancy-todos-aaz.herokuapp.com/"
+// const base_url = "http://localhost:3000/"
 
 
 $(document).ready(() => {
@@ -163,7 +164,7 @@ function fetchTodos() {
     }
   })
     .done((todos) => {
-      // console.log(todos);
+      console.log(todos);
       $('.card').remove()
       todos.forEach(e => {
         let selected = ''
