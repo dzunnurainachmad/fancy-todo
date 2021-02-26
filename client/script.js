@@ -172,19 +172,19 @@ function fetchTodos() {
         else selected = ''
         $("#todo-list").append(`
           <div class="card shadow rounded p-4 mb-2" id="todo-${e.id}">
-            <div class="row mb-2">
+            <div class="row">
               <label for="todo-title-${e.id}" class="col-sm-2 col-form-label">Title</label>
               <div class="col-sm-10">
                 <input class="card-title form-control-plaintext" id="todo-title-${e.id}" value="${e.title}"></input>
               </div>
             </div>
-            <div class="row mb-2">
+            <div class="row">
               <label for="todo-description-${e.id}" class="col-sm-2 col-form-label">Description</label>
               <div class="col-sm-10">
                 <input class="card-text form-control-plaintext" id="todo-description-${e.id}" value="${e.description}"></input>
               </div>
             </div>
-            <div class="row">
+            <div class="row my-2">
               <label class="col-form-label col-sm-2">Due Date</label>
               <div class="col-sm-10 d-flex align-items-center">
                 <input type="date" id="todo-due_date-${e.id}" value="${new Date(e.due_date).toISOString().substr(0, 10)}"></input>
@@ -199,7 +199,7 @@ function fetchTodos() {
                 </select>
               </div>
             </div>
-            <div class="d-flex flex-row justify-content-end">
+            <div class="d-flex flex-row justify-content-end mt-3">
               <div class="mx-2">
                 <button class="btn btn-secondary" onclick="updateCard(${e.id})">Update</button>
               </div>
