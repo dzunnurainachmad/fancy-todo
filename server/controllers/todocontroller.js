@@ -18,7 +18,7 @@ class TodoController {
 
   static getTodo(req, res, next) {
     const id = req.decoded.id
-    Todo.findAll({where:{UserId:id}})
+    Todo.findAll({where:{UserId:id}, order: [['createdAt', 'ASC']] })
       .then(todos => {
         // console.log(todos);
         res.status(200).json(todos)
